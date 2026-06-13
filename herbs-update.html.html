@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memphis Wild Herbs | Local Field Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --forest:   #2d4a2d;
+      --moss:     #4a7c4a;
+      --sage:     #7aad6a;
+      --sage-lt:  #b8d9a8;
+      --cream:    #faf6ee;
+      --parchment:#f2ead8;
+      --brown:    #6b4c2a;
+      --brown-lt: #c4a882;
+      --text:     #2a2a1e;
+      --muted:    #6b6b55;
+      --white:    #ffffff;
+      --radius:   14px;
+      --shadow:   0 3px 20px rgba(45,74,45,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: var(--forest);
+      padding: 20px 24px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: repeating-linear-gradient(90deg, var(--sage) 0, var(--sage) 8px, var(--brown-lt) 8px, var(--brown-lt) 16px);
+    }
+    .header-inner { max-width: 860px; margin: 0 auto; }
+    .site-name {
+      font-family: 'Playfair Display', serif;
+      color: var(--sage-lt);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+    .site-tagline {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .header-badges {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+    }
+    .h-badge {
+      background: rgba(122,173,106,0.2);
+      border: 1px solid rgba(122,173,106,0.4);
+      color: var(--sage-lt);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* Medical disclaimer */
+    .disclaimer {
+      background: #fffbe6;
+      border-left: 4px solid #d4a017;
+      padding: 12px 18px;
+      margin: 0;
+      font-size: 0.8rem;
+      color: #5a4500;
+      line-height: 1.55;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Main layout */
+    main { flex: 1; max-width: 880px; margin: 0 auto; padding: 28px 16px 48px; width: 100%; }
+
+    /* Intro */
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .intro h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    .intro p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; max-width: 560px; margin: 0 auto; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .filter-btn {
+      background: var(--white);
+      border: 1.5px solid rgba(74,124,74,0.3);
+      color: var(--moss);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { background: var(--parchment); border-color: var(--moss); }
+    .filter-btn.active { background: var(--forest); color: var(--sage-lt); border-color: var(--forest); }
+
+    /* Grid */
+    .herb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* Herb card */
+    .herb-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-top: 5px solid var(--moss);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 0.15s;
+    }
+    .herb-card:hover { transform: translateY(-3px); }
+    .herb-card[data-color="brown"] { border-top-color: var(--brown); }
+    .herb-card[data-color="gold"] { border-top-color: #c9a84c; }
+    .herb-card[data-color="sage"] { border-top-color: var(--sage); }
+    .herb-card[data-color="forest"] { border-top-color: var(--forest); }
+    .herb-card[data-color="purple"] { border-top-color: #7a5fa0; }
+
+    .herb-photo {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      background: var(--parchment);
+    }
+    .herb-photo-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 200px;
+      background: var(--parchment);
+    }
+    .herb-photo-credit {
+      position: absolute;
+      bottom: 0; right: 0;
+      background: rgba(0,0,0,0.45);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.6rem;
+      padding: 3px 7px;
+      letter-spacing: 0.03em;
+    }
+
+    .herb-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; gap: 0; }
+
+    .herb-names { margin-bottom: 10px; }
+    .herb-common {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.2;
+    }
+    .herb-latin {
+      font-style: italic;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .herb-aka {
+      font-size: 0.72rem;
+      color: var(--brown);
+      font-weight: 600;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Tags */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 12px; }
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+    .tag-edible   { background: #e8f5e0; color: #2d6a1a; }
+    .tag-medicinal{ background: #e8f0fb; color: #1a3d8a; }
+    .tag-tea      { background: #fff3e0; color: #8a5000; }
+    .tag-topical  { background: #fce4ec; color: #8a1a40; }
+    .tag-tonic    { background: #f3e5f5; color: #5a1a7a; }
+
+    /* Sections inside card */
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 4px;
+      margin-top: 12px;
+    }
+    .herb-desc {
+      font-size: 0.84rem;
+      color: #3a3a2a;
+      line-height: 1.6;
+    }
+    .benefit-list {
+      list-style: none;
+      padding: 0;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .benefit-list li {
+      font-size: 0.82rem;
+      color: #3a3a2a;
+      line-height: 1.45;
+      padding-left: 14px;
+      position: relative;
+    }
+    .benefit-list li::before {
+      content: '✦';
+      position: absolute; left: 0;
+      color: var(--sage);
+      font-size: 0.55rem;
+      top: 4px;
+    }
+    .edible-note {
+      background: var(--parchment);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: var(--brown);
+      line-height: 1.55;
+      margin-top: 10px;
+      border-left: 3px solid var(--brown-lt);
+    }
+
+    /* Caution box */
+    .caution {
+      background: #fffbe6;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.75rem;
+      color: #5a4500;
+      line-height: 1.5;
+      margin-top: 10px;
+      border-left: 3px solid #d4a017;
+    }
+
+    /* Season pill */
+    .season-row { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+    .season-label { font-size: 0.68rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .season-pill {
+      font-size: 0.68rem; font-weight: 700;
+      background: rgba(74,124,74,0.12);
+      color: var(--moss);
+      padding: 2px 10px; border-radius: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Empty state */
+    .empty { text-align: center; padding: 40px; color: var(--muted); grid-column: 1/-1; }
+    .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+
+    /* Footer */
+    footer {
+      background: var(--forest);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      font-size: 0.78rem;
+      padding: 20px 16px;
+      line-height: 1.7;
+    }
+    footer strong { color: rgba(255,255,255,0.8); }
+    footer .disclaimer-footer {
+      background: rgba(212,160,23,0.15);
+      border: 1px solid rgba(212,160,23,0.3);
+      color: #f5d78a;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 12px auto 0;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 480px) {
+      .herb-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="site-name">Memphis Wild Herbs</div>
+    <div class="site-tagline">A Local Field Guide — Greater Memphis, Tennessee</div>
+    <div class="header-badges">
+      <span class="h-badge">🌿 Wind-Spread Plants</span>
+      <span class="h-badge">📍 Grows Locally</span>
+      <span class="h-badge">🍃 Edible &amp; Medicinal</span>
+    </div>
+  </div>
+</header>
+
+<div class="disclaimer">
+  ⚠️ <strong>Please check with your doctor before using any herbs.</strong> No medical advice is given. This guide is for educational and informational purposes only.
+</div>
+
+<main>
+
+  <div class="intro">
+    <h1>Wild Herbs Growing Around Memphis</h1>
+    <p>These plants spread naturally through wind, foot traffic, and wildlife across the Memphis area. Browse each herb to discover its traditional uses, health benefits, and edible features.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all" onclick="filterCards('all',this)">All Herbs</button>
+    <button class="filter-btn" data-filter="edible" onclick="filterCards('edible',this)">Edible</button>
+    <button class="filter-btn" data-filter="medicinal" onclick="filterCards('medicinal',this)">Medicinal</button>
+    <button class="filter-btn" data-filter="tea" onclick="filterCards('tea',this)">Good for Tea</button>
+    <button class="filter-btn" data-filter="topical" onclick="filterCards('topical',this)">Topical Use</button>
+  </div>
+
+  <div class="herb-grid" id="herb-grid">
+
+    <!-- Plantain -->
+    <div class="herb-card" data-color="forest" data-tags="edible,medicinal,topical">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG/480px-Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG" alt="Broadleaf Plantain growing in sidewalk crack" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌿</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Broadleaf Plantain</div>
+          <div class="herb-latin">Plantago major</div>
+          <div class="herb-aka">Also known as: Common Plantain, Dooryard Weed</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-topical">Topical</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">One of the most widespread plants in Memphis — found in lawns, roadsides, and disturbed soil. Its ribbed oval leaves are a giveaway. Seeds spread by wind and foot traffic.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Soothes insect bites, stings, and minor skin irritations when leaf is crushed and applied</li>
+          <li>Traditionally used to support respiratory health and soothe coughs</li>
+          <li>Anti-inflammatory properties used in folk medicine for wound care</li>
+          <li>Rich in vitamins A, C, and K</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Young leaves can be eaten raw in salads (mild, slightly bitter) or cooked like spinach. Seeds can be ground into flour. Leaves get tougher and more bitter with age.</div>
+        <div class="caution">⚠️ Consult your doctor before use. Avoid if allergic to plantain pollen.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Spring – Fall</span></div>
+      </div>
+    </div>
+
+    <!-- Purslane -->
+    <div class="herb-card" data-color="sage" data-tags="edible,medicinal">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Portulaca_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-113.jpg/480px-Portulaca_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-113.jpg" alt="Purslane plant illustration" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌱</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Purslane</div>
+          <div class="herb-latin">Portulaca oleracea</div>
+          <div class="herb-aka">Also known as: Pigweed, Little Hogweed, Verdolaga</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">A low-growing succulent with thick, fleshy reddish stems and small oval leaves. Thrives in Memphis heat — often spotted in garden beds, driveways, and vacant lots in summer.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>One of the richest plant sources of omega-3 fatty acids (alpha-linolenic acid)</li>
+          <li>High in antioxidants including vitamins C, E, and beta-carotene</li>
+          <li>Traditionally used to support heart health and reduce inflammation</li>
+          <li>Contains melatonin — may support healthy sleep patterns</li>
+          <li>Good source of magnesium, potassium, and calcium</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Entire plant above ground is edible. Leaves and stems have a mild, slightly lemony, slightly mucilaginous flavor. Great raw in salads, sautéed, or added to soups. A staple green in Mediterranean cooking.</div>
+        <div class="caution">⚠️ Consult your doctor before use. High in oxalates — use in moderation if prone to kidney stones.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Summer – Early Fall</span></div>
+      </div>
+    </div>
+
+    <!-- Goldenrod -->
+    <div class="herb-card" data-color="gold" data-tags="medicinal,tea,topical">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Solidago_virgaurea_-_goldenrod_-_desc-flower.jpg/480px-Solidago_virgaurea_-_goldenrod_-_desc-flower.jpg" alt="Goldenrod flowers in bloom" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌾</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Goldenrod</div>
+          <div class="herb-latin">Solidago spp.</div>
+          <div class="herb-aka">Also known as: Solidago, Woundwort, Aaron's Rod</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-tea">Good for Tea</span>
+          <span class="tag tag-topical">Topical</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">Tall, bright yellow plumes that light up Memphis roadsides and fields in late summer and fall. A native Tennessee wildflower that spreads abundantly by wind-carried seeds. Often mistakenly blamed for hay fever (that's ragweed!).</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Traditionally used to support urinary tract and kidney health</li>
+          <li>Strong anti-inflammatory and antioxidant properties</li>
+          <li>Used in European herbal medicine for respiratory support</li>
+          <li>May help relieve allergy symptoms (ironically — despite the confusion with ragweed)</li>
+          <li>Topically used in traditional medicine for wound healing and skin conditions</li>
+        </ul>
+        <div class="edible-note">🍵 <strong>Tea:</strong> Dried flowers and leaves make a pleasant, mildly sweet herbal tea. Pour boiling water over 1–2 tsp dried herb, steep 10–15 minutes. Flowers are also edible as a garnish.</div>
+        <div class="caution">⚠️ Consult your doctor before use. Avoid if you have ragweed allergies or kidney disease. Not recommended during pregnancy without medical guidance.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Late Summer – Fall</span></div>
+      </div>
+    </div>
+
+    <!-- Cleavers / Sticky Weed -->
+    <div class="herb-card" data-color="moss" data-tags="edible,medicinal,tea,tonic">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Galium_aparine_close800.jpg/480px-Galium_aparine_close800.jpg" alt="Cleavers sticky weed plant" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌿</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Cleavers</div>
+          <div class="herb-latin">Galium aparine</div>
+          <div class="herb-aka">Also known as: Sticky Weed, Goosegrass, Catchweed, Velcro Plant</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-tea">Good for Tea</span>
+          <span class="tag tag-tonic">Tonic</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">The plant that sticks to your clothes! Cleavers scramble through hedgerows and roadsides across Memphis in spring. Its sticky hooks spread seeds by hitching rides on animals and people.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Historically one of the most used lymphatic system tonics in Western herbalism</li>
+          <li>Traditionally used to support healthy skin, including eczema and psoriasis</li>
+          <li>Used as a gentle diuretic to support kidney and urinary health</li>
+          <li>Rich in tannins and flavonoids with antioxidant properties</li>
+          <li>Traditional spring tonic — used for detoxification and cleansing after winter</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Young spring shoots can be eaten raw or lightly cooked (steaming reduces stickiness). Seeds can be dried and roasted as a caffeine-free coffee substitute. Best harvested in early spring before flowering.</div>
+        <div class="caution">⚠️ Consult your doctor before use. May interact with blood thinners or diabetes medications. Avoid large quantities during pregnancy.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Early Spring</span></div>
+      </div>
+    </div>
+
+    <!-- Dandelion -->
+    <div class="herb-card" data-color="gold" data-tags="edible,medicinal,tea,tonic">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Dandelion_Flower_ies.jpg/480px-Dandelion_Flower_ies.jpg" alt="Dandelion flower in bloom" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌼</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Dandelion</div>
+          <div class="herb-latin">Taraxacum officinale</div>
+          <div class="herb-aka">Also known as: Lion's Tooth, Piss-en-lit, Blowball</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-tea">Good for Tea</span>
+          <span class="tag tag-tonic">Tonic</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">Memphis lawns and fields are full of dandelions. Every part of this plant is useful. Seeds travel up to 5 miles on the wind — one of the most effective wind-dispersed plants in the world.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Excellent source of vitamins A, C, K, and B vitamins — more nutritious than many cultivated greens</li>
+          <li>Traditionally used to support liver and gallbladder health</li>
+          <li>Natural diuretic that may support kidney function while replenishing potassium</li>
+          <li>Prebiotic fiber (inulin) supports healthy gut flora</li>
+          <li>Anti-inflammatory properties studied for blood sugar and cholesterol support</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Entire plant is edible. Young leaves are great raw in salads (bitter, similar to arugula) or sautéed with garlic. Flowers can be eaten raw, battered and fried, or made into dandelion wine. Roots can be roasted as a coffee alternative or boiled as a vegetable.</div>
+        <div class="caution">⚠️ Consult your doctor before use. May interact with diuretics, lithium, and certain antibiotics. Avoid if allergic to ragweed, chrysanthemums, or daisies.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Year-round</span></div>
+      </div>
+    </div>
+
+    <!-- Red Clover -->
+    <div class="herb-card" data-color="purple" data-tags="edible,medicinal,tea,tonic">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Trifolium_pratense_flower_ies.jpg/480px-Trifolium_pratense_flower_ies.jpg" alt="Red clover flower" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌸</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Red Clover</div>
+          <div class="herb-latin">Trifolium pratense</div>
+          <div class="herb-aka">Also known as: Meadow Clover, Cow Clover, Beebread</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-tea">Good for Tea</span>
+          <span class="tag tag-tonic">Tonic</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">Pink-purple globe-shaped flowers dot Memphis meadows, roadsides, and lawns from spring through fall. Seeds spread by wind and pollinators. A beloved plant for bees and herbalists alike.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Contains isoflavones (plant estrogens) — traditionally used for menopausal symptom support</li>
+          <li>Traditionally used to support respiratory health and ease coughs</li>
+          <li>Rich in calcium, magnesium, potassium, and vitamins C and B</li>
+          <li>Used as a traditional blood purifier and lymphatic tonic</li>
+          <li>Anti-inflammatory and antioxidant compounds studied for cardiovascular support</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Fresh flowers are sweet and edible — great in salads or as a garnish. Dried flowers make a pleasant, mildly sweet floral tea. Young leaves can be eaten raw or cooked. Seeds can be sprouted.</div>
+        <div class="caution">⚠️ Consult your doctor before use. Contains plant estrogens — avoid if you have hormone-sensitive conditions or are on blood thinners or hormone therapy.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Spring – Fall</span></div>
+      </div>
+    </div>
+
+    <!-- Chickweed -->
+    <div class="herb-card" data-color="sage" data-tags="edible,medicinal,topical">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stellaria_media_kz01.jpg/480px-Stellaria_media_kz01.jpg" alt="Chickweed plant with small white flowers" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🌿</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Chickweed</div>
+          <div class="herb-latin">Stellaria media</div>
+          <div class="herb-aka">Also known as: Starwort, Winterweed, Satin Flower</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+          <span class="tag tag-topical">Topical</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">A delicate, low-growing plant with tiny star-shaped white flowers. Thrives in cool weather — look for it in Memphis lawns and shady garden beds in late winter through spring.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>Traditionally used topically to soothe itchy skin, rashes, eczema, and insect bites</li>
+          <li>Mild anti-inflammatory properties support skin health</li>
+          <li>Rich in vitamins C, A, and B vitamins, plus iron and calcium</li>
+          <li>Traditionally used as a gentle remedy for respiratory irritation</li>
+          <li>Used in folk medicine to support healthy weight management</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> One of the tastiest wild greens — mild, fresh flavor similar to spinach. Eat raw in salads, on sandwiches, or lightly steamed. Best harvested young in late winter and early spring before it flowers.</div>
+        <div class="caution">⚠️ Consult your doctor before use. Eat in moderate amounts only. Avoid if taking blood thinners or diuretics.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Late Winter – Spring</span></div>
+      </div>
+    </div>
+
+    <!-- Wood Sorrel -->
+    <div class="herb-card" data-color="brown" data-tags="edible,medicinal">
+      <div class="herb-photo-wrap">
+        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Oxalis_stricta1.jpg/480px-Oxalis_stricta1.jpg" alt="Wood sorrel yellow flowers and clover-like leaves" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:3rem;background:var(--parchment)\'>🍀</div>'"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
+      </div>
+      <div class="herb-body">
+        <div class="herb-names">
+          <div class="herb-common">Wood Sorrel</div>
+          <div class="herb-latin">Oxalis stricta</div>
+          <div class="herb-aka">Also known as: Yellow Oxalis, Sour Weed, Lemon Clover</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag tag-edible">Edible</span>
+          <span class="tag tag-medicinal">Medicinal</span>
+        </div>
+        <div class="section-label">About this plant</div>
+        <p class="herb-desc">Heart-shaped trifoliate leaves that look like clover but taste like lemon! Small yellow flowers and seed pods that explode when ripe to spread seeds. Very common in Memphis yards and shady spots.</p>
+        <div class="section-label">Traditional health benefits</div>
+        <ul class="benefit-list">
+          <li>High in vitamin C — historically used to prevent and treat scurvy</li>
+          <li>Traditionally used to stimulate appetite and aid digestion</li>
+          <li>Cooling and refreshing — used traditionally to reduce fevers</li>
+          <li>Mild antibacterial properties noted in traditional medicine</li>
+        </ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Leaves, flowers, and seed pods all have a bright, lemony-sour flavor from oxalic acid. Great as a trail snack, added to salads, or used as a garnish. The sour flavor also works well in drinks and sauces.</div>
+        <div class="caution">⚠️ Consult your doctor before use. High in oxalic acid — eat in small amounts only. Not recommended for those with kidney stones, gout, or rheumatoid arthritis.</div>
+        <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Spring – Fall</span></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <strong>Memphis Wild Herbs</strong> — A Local Field Guide for the Greater Memphis Area<br>
+  For educational purposes only · Not a substitute for professional medical advice
+  <div class="disclaimer-footer">
+    ⚠️ Please check with your doctor before using any herbs. No medical advice is given. Information is for educational purposes only. Always positively identify any plant before consuming.
+  </div>
+</footer>
+
+<script>
+  function filterCards(filter, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.herb-card');
+    let visible = 0;
+    cards.forEach(card => {
+      if (filter === 'all') {
+        card.style.display = '';
+        visible++;
+      } else {
+        const tags = card.getAttribute('data-tags') || '';
+        if (tags.includes(filter)) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    });
+    const empty = document.getElementById('empty-msg');
+    if (empty) empty.remove();
+    if (visible === 0) {
+      const grid = document.getElementById('herb-grid');
+      const msg = document.createElement('div');
+      msg.id = 'empty-msg';
+      msg.className = 'empty';
+      msg.innerHTML = '<div class="empty-icon">🌿</div><p>No herbs match this filter yet. Check back soon!</p>';
+      grid.appendChild(msg);
+    }
+  }
+</script>
+
+</body>
+</html>
