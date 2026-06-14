@@ -6,12 +6,7 @@
   <title>Memphis Wild Herbs | Local Field Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --forest:#2d4a2d;--moss:#4a7c4a;--sage:#7aad6a;--sage-lt:#b8d9a8;
-      --cream:#faf6ee;--parchment:#f2ead8;--brown:#6b4c2a;--brown-lt:#c4a882;
-      --text:#2a2a1e;--muted:#6b6b55;--white:#ffffff;--radius:14px;
-      --shadow:0 3px 20px rgba(45,74,45,0.12);
-    }
+    :root{--forest:#2d4a2d;--moss:#4a7c4a;--sage:#7aad6a;--sage-lt:#b8d9a8;--cream:#faf6ee;--parchment:#f2ead8;--brown:#6b4c2a;--brown-lt:#c4a882;--text:#2a2a1e;--muted:#6b6b55;--white:#ffffff;--radius:14px;--shadow:0 3px 20px rgba(45,74,45,0.12);}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
     header{background:var(--forest);padding:20px 24px 16px;position:relative;overflow:hidden;}
@@ -38,8 +33,9 @@
     .herb-card[data-color="sage"]{border-top-color:var(--sage);}
     .herb-card[data-color="forest"]{border-top-color:var(--forest);}
     .herb-card[data-color="purple"]{border-top-color:#7a5fa0;}
-    .herb-photo-wrap{position:relative;overflow:hidden;height:200px;background:var(--parchment);}
+    .herb-photo-wrap{position:relative;overflow:hidden;height:200px;background:var(--parchment);display:flex;align-items:center;justify-content:center;}
     .herb-photo{width:100%;height:200px;object-fit:cover;display:block;}
+    .herb-emoji-fallback{font-size:4rem;}
     .herb-photo-credit{position:absolute;bottom:0;right:0;background:rgba(0,0,0,.45);color:rgba(255,255,255,.85);font-size:.6rem;padding:3px 7px;letter-spacing:.03em;}
     .herb-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column;}
     .herb-names{margin-bottom:10px;}
@@ -65,7 +61,7 @@
     .season-pill{font-size:.68rem;font-weight:700;background:rgba(74,124,74,.12);color:var(--moss);padding:2px 10px;border-radius:12px;letter-spacing:.04em;}
     footer{background:var(--forest);color:rgba(255,255,255,.55);text-align:center;font-size:.78rem;padding:20px 16px;line-height:1.7;}
     footer strong{color:rgba(255,255,255,.8);}
-    footer .disclaimer-footer{background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:#f5d78a;font-size:.75rem;font-weight:600;padding:10px 18px;border-radius:8px;max-width:600px;margin:12px auto 0;line-height:1.55;}
+    .disclaimer-footer{background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:#f5d78a;font-size:.75rem;font-weight:600;padding:10px 18px;border-radius:8px;max-width:600px;margin:12px auto 0;line-height:1.55;}
     @media(max-width:480px){.herb-grid{grid-template-columns:1fr;}}
   </style>
 </head>
@@ -98,8 +94,8 @@
 
     <div class="herb-card" data-color="forest" data-tags="edible,medicinal,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG" alt="Broadleaf Plantain" loading="lazy" onerror="this.style.display='none';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='4rem';this.parentElement.innerHTML='🌿<div class=herb-photo-credit>Photo unavailable</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG/480px-Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG" alt="Broadleaf Plantain" data-emoji="🌿"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Broadleaf Plantain</div><div class="herb-latin">Plantago major</div><div class="herb-aka">Also known as: Common Plantain, Dooryard Weed</div></div>
@@ -115,13 +111,13 @@
 
     <div class="herb-card" data-color="sage" data-tags="edible,medicinal">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Portulaca_oleracea_plant.jpg/640px-Portulaca_oleracea_plant.jpg" alt="Purslane" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌱</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Portulaca_oleracea_plant.jpg/480px-Portulaca_oleracea_plant.jpg" alt="Purslane" data-emoji="🌱"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Purslane</div><div class="herb-latin">Portulaca oleracea</div><div class="herb-aka">Also known as: Pigweed, Little Hogweed, Verdolaga</div></div>
         <div class="tag-row"><span class="tag tag-edible">Edible</span><span class="tag tag-medicinal">Medicinal</span></div>
-        <div class="section-label">About this plant</div><p class="herb-desc">A low-growing succulent with thick, fleshy reddish stems and small oval leaves. Thrives in Memphis heat — often spotted in garden beds, driveways, and vacant lots in summer.</p>
+        <div class="section-label">About this plant</div><p class="herb-desc">A low-growing succulent with thick, fleshy reddish stems and small oval leaves. Thrives in Memphis heat — often spotted in garden beds and driveways in summer.</p>
         <div class="section-label">Traditional health benefits</div>
         <ul class="benefit-list"><li>One of the richest plant sources of omega-3 fatty acids</li><li>High in antioxidants including vitamins C, E, and beta-carotene</li><li>Traditionally used to support heart health and reduce inflammation</li><li>Contains melatonin — may support healthy sleep patterns</li></ul>
         <div class="edible-note">🍽️ <strong>Edible:</strong> Entire plant above ground is edible. Mild, slightly lemony flavor. Great raw in salads, sautéed, or added to soups.</div>
@@ -132,13 +128,13 @@
 
     <div class="herb-card" data-color="gold" data-tags="medicinal,tea,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg/640px-Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg" alt="Goldenrod" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌾</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg/480px-Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg" alt="Goldenrod" data-emoji="🌾"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Goldenrod</div><div class="herb-latin">Solidago spp.</div><div class="herb-aka">Also known as: Solidago, Woundwort, Aaron's Rod</div></div>
         <div class="tag-row"><span class="tag tag-medicinal">Medicinal</span><span class="tag tag-tea">Good for Tea</span><span class="tag tag-topical">Topical</span></div>
-        <div class="section-label">About this plant</div><p class="herb-desc">Tall, bright yellow plumes that light up Memphis roadsides and fields in late summer and fall. A native Tennessee wildflower — often mistakenly blamed for hay fever (that's ragweed!).</p>
+        <div class="section-label">About this plant</div><p class="herb-desc">Tall, bright yellow plumes lighting up Memphis roadsides in late summer. A native Tennessee wildflower often mistakenly blamed for hay fever — that's actually ragweed!</p>
         <div class="section-label">Traditional health benefits</div>
         <ul class="benefit-list"><li>Traditionally used to support urinary tract and kidney health</li><li>Strong anti-inflammatory and antioxidant properties</li><li>Used in European herbal medicine for respiratory support</li><li>Topically used in traditional medicine for wound healing</li></ul>
         <div class="edible-note">🍵 <strong>Tea:</strong> Dried flowers and leaves make a pleasant, mildly sweet herbal tea. Steep 10–15 minutes.</div>
@@ -149,16 +145,16 @@
 
     <div class="herb-card" data-color="moss" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Galium_aparine_close800.jpg/640px-Galium_aparine_close800.jpg" alt="Cleavers" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌿</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Galium_aparine_close800.jpg/480px-Galium_aparine_close800.jpg" alt="Cleavers" data-emoji="🌿"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Cleavers</div><div class="herb-latin">Galium aparine</div><div class="herb-aka">Also known as: Sticky Weed, Goosegrass, Catchweed, Velcro Plant</div></div>
         <div class="tag-row"><span class="tag tag-edible">Edible</span><span class="tag tag-medicinal">Medicinal</span><span class="tag tag-tea">Good for Tea</span><span class="tag tag-tonic">Tonic</span></div>
-        <div class="section-label">About this plant</div><p class="herb-desc">The plant that sticks to your clothes! Cleavers scramble through hedgerows and roadsides across Memphis in spring. Its sticky hooks spread seeds by hitching rides on animals and people.</p>
+        <div class="section-label">About this plant</div><p class="herb-desc">The plant that sticks to your clothes! Cleavers scramble through hedgerows and roadsides across Memphis in spring, spreading seeds by hitching rides on animals and people.</p>
         <div class="section-label">Traditional health benefits</div>
         <ul class="benefit-list"><li>Historically one of the most used lymphatic system tonics in Western herbalism</li><li>Traditionally used to support healthy skin including eczema and psoriasis</li><li>Used as a gentle diuretic to support kidney and urinary health</li><li>Traditional spring tonic used for detoxification after winter</li></ul>
-        <div class="edible-note">🍽️ <strong>Edible:</strong> Young spring shoots can be eaten raw or lightly cooked. Seeds can be dried and roasted as a caffeine-free coffee substitute.</div>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Young spring shoots can be eaten raw or lightly cooked. Seeds can be roasted as a caffeine-free coffee substitute.</div>
         <div class="caution">⚠️ Consult your doctor before use. May interact with blood thinners. Avoid large quantities during pregnancy.</div>
         <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Early Spring</span></div>
       </div>
@@ -166,16 +162,16 @@
 
     <div class="herb-card" data-color="gold" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Dandelion_Flower_ies.jpg/640px-Dandelion_Flower_ies.jpg" alt="Dandelion" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌼</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Dandelion_Flower_ies.jpg/480px-Dandelion_Flower_ies.jpg" alt="Dandelion" data-emoji="🌼"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Dandelion</div><div class="herb-latin">Taraxacum officinale</div><div class="herb-aka">Also known as: Lion's Tooth, Blowball, Piss-en-lit</div></div>
         <div class="tag-row"><span class="tag tag-edible">Edible</span><span class="tag tag-medicinal">Medicinal</span><span class="tag tag-tea">Good for Tea</span><span class="tag tag-tonic">Tonic</span></div>
         <div class="section-label">About this plant</div><p class="herb-desc">Memphis lawns and fields are full of dandelions. Every part of this plant is useful. Seeds travel up to 5 miles on the wind — one of the most effective wind-dispersed plants in the world.</p>
         <div class="section-label">Traditional health benefits</div>
-        <ul class="benefit-list"><li>Excellent source of vitamins A, C, K, and B vitamins</li><li>Traditionally used to support liver and gallbladder health</li><li>Natural diuretic that may support kidney function</li><li>Prebiotic fiber supports healthy gut flora</li></ul>
-        <div class="edible-note">🍽️ <strong>Edible:</strong> Entire plant is edible. Young leaves great raw in salads. Flowers can be eaten raw or made into dandelion wine. Roots can be roasted as a coffee alternative.</div>
+        <ul class="benefit-list"><li>Excellent source of vitamins A, C, K, and B vitamins</li><li>Traditionally used to support liver and gallbladder health</li><li>Natural diuretic that may support kidney function while replenishing potassium</li><li>Prebiotic fiber supports healthy gut flora</li></ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Entire plant is edible. Young leaves great raw in salads. Flowers can be made into dandelion wine. Roots can be roasted as a coffee alternative.</div>
         <div class="caution">⚠️ Consult your doctor before use. May interact with diuretics and certain antibiotics.</div>
         <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Year-round</span></div>
       </div>
@@ -183,13 +179,13 @@
 
     <div class="herb-card" data-color="purple" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Trifolium_pratense_flower_ies.jpg/640px-Trifolium_pratense_flower_ies.jpg" alt="Red Clover" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌸</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Trifolium_pratense_flower_ies.jpg/480px-Trifolium_pratense_flower_ies.jpg" alt="Red Clover" data-emoji="🌸"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Red Clover</div><div class="herb-latin">Trifolium pratense</div><div class="herb-aka">Also known as: Meadow Clover, Cow Clover, Beebread</div></div>
         <div class="tag-row"><span class="tag tag-edible">Edible</span><span class="tag tag-medicinal">Medicinal</span><span class="tag tag-tea">Good for Tea</span><span class="tag tag-tonic">Tonic</span></div>
-        <div class="section-label">About this plant</div><p class="herb-desc">Pink-purple globe-shaped flowers dot Memphis meadows, roadsides, and lawns from spring through fall. A beloved plant for bees and herbalists alike.</p>
+        <div class="section-label">About this plant</div><p class="herb-desc">Pink-purple globe-shaped flowers dot Memphis meadows and roadsides from spring through fall. A beloved plant for bees and herbalists alike.</p>
         <div class="section-label">Traditional health benefits</div>
         <ul class="benefit-list"><li>Contains isoflavones — traditionally used for menopausal symptom support</li><li>Traditionally used to support respiratory health and ease coughs</li><li>Rich in calcium, magnesium, potassium, and vitamins C and B</li><li>Used as a traditional blood purifier and lymphatic tonic</li></ul>
         <div class="edible-note">🍽️ <strong>Edible:</strong> Fresh flowers are sweet and edible in salads. Dried flowers make a pleasant floral tea. Young leaves can be eaten raw or cooked.</div>
@@ -200,8 +196,8 @@
 
     <div class="herb-card" data-color="sage" data-tags="edible,medicinal,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/thirty/Stellaria_media_-_chickweed.jpg/640px-Stellaria_media_-_chickweed.jpg" alt="Chickweed" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🌿</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stellaria_media_kz01.jpg/480px-Stellaria_media_kz01.jpg" alt="Chickweed" data-emoji="🌿"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Chickweed</div><div class="herb-latin">Stellaria media</div><div class="herb-aka">Also known as: Starwort, Winterweed, Satin Flower</div></div>
@@ -209,7 +205,7 @@
         <div class="section-label">About this plant</div><p class="herb-desc">A delicate, low-growing plant with tiny star-shaped white flowers. Thrives in cool weather — look for it in Memphis lawns and shady garden beds in late winter through spring.</p>
         <div class="section-label">Traditional health benefits</div>
         <ul class="benefit-list"><li>Traditionally used topically to soothe itchy skin, rashes, and insect bites</li><li>Rich in vitamins C, A, and B vitamins, plus iron and calcium</li><li>Traditionally used as a gentle remedy for respiratory irritation</li></ul>
-        <div class="edible-note">🍽️ <strong>Edible:</strong> One of the tastiest wild greens — mild, fresh flavor similar to spinach. Eat raw in salads or lightly steamed. Best harvested young in late winter.</div>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> One of the tastiest wild greens — mild, fresh flavor similar to spinach. Best harvested young in late winter and early spring.</div>
         <div class="caution">⚠️ Consult your doctor before use. Eat in moderate amounts only.</div>
         <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Late Winter – Spring</span></div>
       </div>
@@ -217,17 +213,17 @@
 
     <div class="herb-card" data-color="brown" data-tags="edible,medicinal">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Oxalis_stricta1.jpg/640px-Oxalis_stricta1.jpg" alt="Wood Sorrel" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;font-size:4rem;background:var(--parchment)\'>🍀</div>';"/>
-        <div class="herb-photo-credit">© Wikimedia Commons CC BY-SA</div>
+        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Oxalis_stricta1.jpg/480px-Oxalis_stricta1.jpg" alt="Wood Sorrel" data-emoji="🍀"/>
+        <div class="herb-photo-credit">© Wikimedia Commons</div>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Wood Sorrel</div><div class="herb-latin">Oxalis stricta</div><div class="herb-aka">Also known as: Yellow Oxalis, Sour Weed, Lemon Clover</div></div>
         <div class="tag-row"><span class="tag tag-edible">Edible</span><span class="tag tag-medicinal">Medicinal</span></div>
-        <div class="section-label">About this plant</div><p class="herb-desc">Heart-shaped trifoliate leaves that look like clover but taste like lemon! Small yellow flowers and seed pods that explode when ripe. Very common in Memphis yards and shady spots.</p>
+        <div class="section-label">About this plant</div><p class="herb-desc">Heart-shaped trifoliate leaves that look like clover but taste like lemon! Small yellow flowers and exploding seed pods. Very common in Memphis yards and shady spots.</p>
         <div class="section-label">Traditional health benefits</div>
-        <ul class="benefit-list"><li>High in vitamin C — historically used to prevent and treat scurvy</li><li>Traditionally used to stimulate appetite and aid digestion</li><li>Cooling and refreshing — used traditionally to reduce fevers</li></ul>
-        <div class="edible-note">🍽️ <strong>Edible:</strong> Leaves, flowers, and seed pods all have a bright, lemony-sour flavor. Great as a trail snack or added to salads.</div>
-        <div class="caution">⚠️ Consult your doctor before use. High in oxalic acid — eat in small amounts only. Not recommended for those with kidney stones or gout.</div>
+        <ul class="benefit-list"><li>High in vitamin C — historically used to prevent scurvy</li><li>Traditionally used to stimulate appetite and aid digestion</li><li>Cooling and refreshing — used traditionally to reduce fevers</li></ul>
+        <div class="edible-note">🍽️ <strong>Edible:</strong> Leaves, flowers, and seed pods all have a bright lemony-sour flavor. Great as a trail snack or added to salads.</div>
+        <div class="caution">⚠️ Consult your doctor before use. High in oxalic acid — eat in small amounts. Not recommended for those with kidney stones or gout.</div>
         <div class="season-row"><span class="season-label">Best found:</span><span class="season-pill">Spring – Fall</span></div>
       </div>
     </div>
@@ -240,15 +236,36 @@
   <div class="disclaimer-footer">⚠️ Please check with your doctor before using any herbs. No medical advice is given. Information is for educational purposes only. Always positively identify any plant before consuming.</div>
 </footer>
 <script>
+  // Load images via fetch to bypass hotlink restrictions
+  document.querySelectorAll('img.herb-photo').forEach(img => {
+    const src = img.getAttribute('data-src');
+    const emoji = img.getAttribute('data-emoji');
+    const wrap = img.parentElement;
+    fetch(src, {mode:'no-cors'})
+      .then(() => { img.src = src; })
+      .catch(() => {
+        img.remove();
+        const div = document.createElement('div');
+        div.className = 'herb-emoji-fallback';
+        div.textContent = emoji;
+        wrap.insertBefore(div, wrap.firstChild);
+      });
+    img.onerror = function() {
+      this.remove();
+      const div = document.createElement('div');
+      div.className = 'herb-emoji-fallback';
+      div.textContent = emoji;
+      wrap.insertBefore(div, wrap.firstChild);
+    };
+    img.src = src;
+  });
+
   function filterCards(filter,btn){
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.herb-card').forEach(card=>{
       if(filter==='all'){card.style.display='';}
-      else{
-        const tags=card.getAttribute('data-tags')||'';
-        card.style.display=tags.includes(filter)?'':'none';
-      }
+      else{card.style.display=(card.getAttribute('data-tags')||'').includes(filter)?'':'none';}
     });
   }
 </script>
