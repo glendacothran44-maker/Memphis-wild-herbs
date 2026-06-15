@@ -36,7 +36,6 @@
     .herb-photo-wrap{position:relative;overflow:hidden;height:200px;background:var(--parchment);display:flex;align-items:center;justify-content:center;}
     .herb-photo{width:100%;height:200px;object-fit:cover;display:block;}
     .herb-emoji-fallback{font-size:4rem;}
-    .herb-photo-credit{position:absolute;bottom:0;right:0;background:rgba(0,0,0,.45);color:rgba(255,255,255,.85);font-size:.6rem;padding:3px 7px;letter-spacing:.03em;}
     .herb-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column;}
     .herb-names{margin-bottom:10px;}
     .herb-common{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--forest);line-height:1.2;}
@@ -94,8 +93,7 @@
 
     <div class="herb-card" data-color="forest" data-tags="edible,medicinal,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG/480px-Broadleaf_Plantain_%28Plantago_major%29_growing_in_crack_in_sidewalk.JPG" alt="Broadleaf Plantain" data-emoji="🌿"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/broadleaf plantain.jpg" alt="Broadleaf Plantain" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌿</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Broadleaf Plantain</div><div class="herb-latin">Plantago major</div><div class="herb-aka">Also known as: Common Plantain, Dooryard Weed</div></div>
@@ -111,8 +109,7 @@
 
     <div class="herb-card" data-color="sage" data-tags="edible,medicinal">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Portulaca_oleracea_plant.jpg/480px-Portulaca_oleracea_plant.jpg" alt="Purslane" data-emoji="🌱"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/purslane.jpg.jpg" alt="Purslane" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌱</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Purslane</div><div class="herb-latin">Portulaca oleracea</div><div class="herb-aka">Also known as: Pigweed, Little Hogweed, Verdolaga</div></div>
@@ -128,8 +125,7 @@
 
     <div class="herb-card" data-color="gold" data-tags="medicinal,tea,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg/480px-Solidago_canadensis_-_goldenrod_-_desc-flower-head.jpg" alt="Goldenrod" data-emoji="🌾"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/goldenrod.jpg" alt="Goldenrod" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌾</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Goldenrod</div><div class="herb-latin">Solidago spp.</div><div class="herb-aka">Also known as: Solidago, Woundwort, Aaron's Rod</div></div>
@@ -145,8 +141,7 @@
 
     <div class="herb-card" data-color="moss" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Galium_aparine_close800.jpg/480px-Galium_aparine_close800.jpg" alt="Cleavers" data-emoji="🌿"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/cleavers.jpg" alt="Cleavers" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌿</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Cleavers</div><div class="herb-latin">Galium aparine</div><div class="herb-aka">Also known as: Sticky Weed, Goosegrass, Catchweed, Velcro Plant</div></div>
@@ -162,8 +157,7 @@
 
     <div class="herb-card" data-color="gold" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Dandelion_Flower_ies.jpg/480px-Dandelion_Flower_ies.jpg" alt="Dandelion" data-emoji="🌼"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/dandelion.jpg" alt="Dandelion" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌼</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Dandelion</div><div class="herb-latin">Taraxacum officinale</div><div class="herb-aka">Also known as: Lion's Tooth, Blowball, Piss-en-lit</div></div>
@@ -179,8 +173,7 @@
 
     <div class="herb-card" data-color="purple" data-tags="edible,medicinal,tea,tonic">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Trifolium_pratense_flower_ies.jpg/480px-Trifolium_pratense_flower_ies.jpg" alt="Red Clover" data-emoji="🌸"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/redclover.jpg" alt="Red Clover" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌸</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Red Clover</div><div class="herb-latin">Trifolium pratense</div><div class="herb-aka">Also known as: Meadow Clover, Cow Clover, Beebread</div></div>
@@ -196,8 +189,7 @@
 
     <div class="herb-card" data-color="sage" data-tags="edible,medicinal,topical">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stellaria_media_kz01.jpg/480px-Stellaria_media_kz01.jpg" alt="Chickweed" data-emoji="🌿"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/chickweed stellaria plan.jpg" alt="Chickweed" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🌿</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Chickweed</div><div class="herb-latin">Stellaria media</div><div class="herb-aka">Also known as: Starwort, Winterweed, Satin Flower</div></div>
@@ -213,8 +205,7 @@
 
     <div class="herb-card" data-color="brown" data-tags="edible,medicinal">
       <div class="herb-photo-wrap">
-        <img class="herb-photo" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Oxalis_stricta1.jpg/480px-Oxalis_stricta1.jpg" alt="Wood Sorrel" data-emoji="🍀"/>
-        <div class="herb-photo-credit">© Wikimedia Commons</div>
+        <img class="herb-photo" src="images/woodsorrel.jpg" alt="Wood Sorrel" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=herb-emoji-fallback>🍀</div>'"/>
       </div>
       <div class="herb-body">
         <div class="herb-names"><div class="herb-common">Wood Sorrel</div><div class="herb-latin">Oxalis stricta</div><div class="herb-aka">Also known as: Yellow Oxalis, Sour Weed, Lemon Clover</div></div>
@@ -236,30 +227,6 @@
   <div class="disclaimer-footer">⚠️ Please check with your doctor before using any herbs. No medical advice is given. Information is for educational purposes only. Always positively identify any plant before consuming.</div>
 </footer>
 <script>
-  // Load images via fetch to bypass hotlink restrictions
-  document.querySelectorAll('img.herb-photo').forEach(img => {
-    const src = img.getAttribute('data-src');
-    const emoji = img.getAttribute('data-emoji');
-    const wrap = img.parentElement;
-    fetch(src, {mode:'no-cors'})
-      .then(() => { img.src = src; })
-      .catch(() => {
-        img.remove();
-        const div = document.createElement('div');
-        div.className = 'herb-emoji-fallback';
-        div.textContent = emoji;
-        wrap.insertBefore(div, wrap.firstChild);
-      });
-    img.onerror = function() {
-      this.remove();
-      const div = document.createElement('div');
-      div.className = 'herb-emoji-fallback';
-      div.textContent = emoji;
-      wrap.insertBefore(div, wrap.firstChild);
-    };
-    img.src = src;
-  });
-
   function filterCards(filter,btn){
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
